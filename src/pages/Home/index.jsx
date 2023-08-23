@@ -1,20 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {
-  Button,
   ButtonSeach,
-  ButtonSwap,
-  ButtonTitle,
   ButtonViewAll,
   ContainerGeral,
   Image,
-  Teexto,
   Text,
   TextLocation,
   TextStrong,
   TextViewAll,
-  ViewFlatBastSaller,
-  ViewFlatCategory,
   ViewGlobal,
   ViewHeader,
   ViewHeaderText,
@@ -24,24 +17,12 @@ import {
 } from './styled';
 import LogoHome from '../../assets/svg/LogoHome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {FlatList} from 'react-native';
-import api from '../../services/api';
 import {CardList} from '../../components/CardList';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import {CategoryList} from '../../components/CategoryList';
 
 export default function Home() {
   const navigation = useNavigation();
-  const [categories, setCategories] = useState([]);
-  const [selected, setSelected] = useState(0);
-
-  async function getCateg() {
-    const response = await api.get('/categorias/?populate=*');
-    setCategories(response.data.data);
-  }
-
-  useEffect(() => {
-    getCateg();
-  }, []);
 
   return (
     <ContainerGeral>
@@ -51,7 +32,7 @@ export default function Home() {
           <Text>Jebres, Surakarta</Text>
         </ViewHeaderText>
         <ViewLocation>
-          <ButtonSeach onPress={()=> navigation.navigate("Search")}>
+          <ButtonSeach onPress={() => navigation.navigate('Search')}>
             <Ionicons name="search-outline" size={24} color="#000" />
           </ButtonSeach>
           <Ionicons name="notifications-outline" size={24} color="#000" />
@@ -64,32 +45,14 @@ export default function Home() {
       <ViewGlobal>
         <ViewTexts>
           <TextStrong>Category</TextStrong>
-          <ButtonViewAll>
+          <ButtonViewAll> 
             <TextViewAll>View All</TextViewAll>
           </ButtonViewAll>
         </ViewTexts>
-        <ViewFlatCategory>
-          <ButtonSwap>
-            <Ionicons name="swap-horizontal-outline" size={26} color="#000" />
-          </ButtonSwap>
-          <FlatList
-            horizontal={true}
-            data={categories}
-            // numColumns={2}
-            // columnWrapperStyle={{ justifyContent: 'space-around' }}
-            keyExtractor={item => item.id}
-            renderItem={({item}) => (
-              <Button
-                onPress={() => getCateg(item?.attributes.name)}
-                isSelected={setSelected === item?.attributes.name}>
-                <ButtonTitle>{item?.attributes.name}</ButtonTitle>
-              </Button>
-            )}
-          />
-        </ViewFlatCategory>
+        <CategoryList />
         <ViewTexts>
           <TextStrong>Best Seller</TextStrong>
-          <ButtonViewAll onPress={()=> navigation.navigate("BastSaller")}>
+          <ButtonViewAll onPress={() => navigation.navigate('BastSaller')}>
             <TextViewAll>View All</TextViewAll>
           </ButtonViewAll>
         </ViewTexts>

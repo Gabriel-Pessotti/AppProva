@@ -11,7 +11,7 @@ left: 10px;
 `;
 
 export const Text = styled.Text`
-color: #000;
+color: ${({theme}) => theme.Text.black};
 font-size: 17px;
 font-weight: 700;
 line-height: 22.05px;  

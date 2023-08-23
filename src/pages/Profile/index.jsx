@@ -17,7 +17,7 @@ export default function Profile({navigation}) {
     <ContainerGeral>
       <ViewHeader>
         <TopHeader
-        onPress={()=> navigation.navigate= ""}
+        onPress={()=> navigation.goBack('')}
         text="Settings Page"
         />
       </ViewHeader>

@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 export const ContainerGeral = styled.SafeAreaView`
   flex: 1;
   width: 100%;
-  background: #fff;
+  background: ${({theme}) => theme.backgorund.white};
 `;
 export const ViewGlobal = styled.View`
   width: 90%;
@@ -15,7 +15,7 @@ margin-top: 50px;
 align-items: center;
 `;
 export const TextBold = styled.Text`
-color: #000;
+color: ${({theme}) => theme.Text.black};
 font-size: 17px;
 font-weight: 700;
 line-height: 28.8px;

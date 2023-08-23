@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+
 import React, { useEffect, useState } from 'react';
 import {
   ButtonAdd,
@@ -19,34 +19,33 @@ import {FlatList} from 'react-native';
 
 export default function BastSaller() {
   const navigation = useNavigation();
+  const lodprod = 10
   const [produtos, setProdutos] = useState([]);
-  const [offset, setOffSet] = useState(0);
-  console.log(offset);
+  const [page, setPage] = useState(10);
+
 
   async function getProduto() {
     try {
       const response = await api.get(
-        `/produtos/?populate=*&pagination[pageSize]=${10}&pagination[offset]=${offset}`
+        `/produtos/?populate=*&articles?pagination[page]=1&pagination[pageSize]=54`
       );
-      console.log(response.data.data)
-
-      if (offset === 0) {
-        setProdutos(response.data.data);
-      } else {
-        setProdutos(i => [...i, ...response.data.data]);
-      }
+      setProdutos(response.data.data)
     } catch (error) {
       console.error('Erro ao obter os produtos:', error);
     }
   }
 
+  async function handleMore() {
+    const moreResponse = await api.get( `/produtos/?populate=*&articles?pagination[page]=1&pagination[pageSize]=54`);
+    const moreProducts = moreResponse.data.data;
+
+    setProdutos(moreProducts);
+    setPage((prevProductsToShow) => prevProductsToShow + lodprod);
+  }
+
   useEffect(() => {
     getProduto();
-  }, [offset]); // Adicione o offset como dependência do useEffect para executar a chamada sempre que o offset mudar
-
-  const handleMore = () => {
-    setOffSet(offset => offset + 1); // Use a função de atualização do estado para calcular o novo offset
-  };
+  }, []); 
 
   return (
     <ContainerGeral>
@@ -55,18 +54,18 @@ export default function BastSaller() {
       </ViewHeader>
       <ViewGlobal>
       <FlatList
-        data={produtos}
+        data={produtos.slice(0, page)}
         numColumns={2}
         onEndReached={handleMore}
-        onEndReachedThreshold={0.2}
+        onEndReachedThreshold={0.1}
         columnWrapperStyle={{justifyContent: 'space-around'}}
-        keyExtractor={(item, index) => item.id + ':' + index} // Usando item.id + index como chave única
+        keyExtractor={(item, index) => item.id + index} // Usando item.id + index como chave única
         renderItem={({item}) => (
           <View onPress={() => navigation.navigate('Detail', item.id)}>
             <ViewImage>
               <Image
                 source={{
-                  uri: `http://192.168.1.192:1337${item?.attributes.image.data?.attributes.url}`,
+                  uri: `http://192.168.1.191:1337${item?.attributes.image.data?.attributes.url}`,
                 }}
               />
             </ViewImage>

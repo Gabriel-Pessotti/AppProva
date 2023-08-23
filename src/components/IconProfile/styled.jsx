@@ -8,7 +8,7 @@ margin-top: 20px;
 
 `;
 export const ButtonIcon = styled.TouchableOpacity`
-background-color: #E7E7E7;
+background-color: ${({theme}) => theme.backgorund.whiteOff};
 border-radius: 55px;
 width: 35px;
 height: 35px;
@@ -17,7 +17,7 @@ align-items: center;
 `;
 
 export const Text = styled.Text`
-color:  #000;
+color:  ${({theme}) => theme.Text.black};
 font-size: 14px;
 font-weight: 400;
 line-height: 21px;  

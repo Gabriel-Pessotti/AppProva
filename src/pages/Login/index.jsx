@@ -57,6 +57,7 @@ export default function Login({navigation}) {
       console.log(error, "Erro novamente");
     }
   };
+  
 
   const [senhaa, setSenha] = useState(true);
 
@@ -98,7 +99,7 @@ export default function Login({navigation}) {
           </ButtonLogin>
         </ViewFooterr>
         <Button
-          disabled={false}
+          disabled={!isValid}
           onPress={handleSubmit(onSubmit)}
           name="Get Started"
           background={isValid ? '#7140FD' : '#E5E4E3'}

@@ -5,21 +5,21 @@ export const View = styled.View`
 `
 export const TextInput = styled.TextInput`
   border-width: 1px;
-  border-color: #E5E4E3;
+  border-color: ${({theme}) => theme.Borders.whiteLigth};
   text-align: left;
   font-size: 14px;
   border-radius: 16px;
   height: 60px;
-  background-color: #ffffff;
+  background-color: ${({theme}) => theme.backgorund.white};
   border-width: 3px;
   padding-left: 5px;
-  color: #7140FD;
+  color: ${({theme}) => theme.Text.purple};
   
 `;
 
 export const TextError = styled.Text`
   font-size: 12px;
-  color: #FF4D4F;
+  color: ${({theme}) => theme.Text.red};
   font-weight: bold;
 
 `

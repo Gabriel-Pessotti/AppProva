@@ -6,6 +6,8 @@ import Tabs from './tabs';
 import Search from '../pages/Search';
 import Detail from '../pages/Detail';
 import BastSaller from '../pages/BastSaller';
+import Profile from '../pages/Profile';
+import Cart from '../pages/Cart';
 
 
 const Stack = createNativeStackNavigator();
@@ -41,6 +43,16 @@ export default function Routes() {
       <Stack.Screen
         name="BastSaller"
         component={BastSaller}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Cart"
+        component={Cart}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
