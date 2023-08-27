@@ -33,7 +33,6 @@ export default function Detail({route}) {
   const [count, setCount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
 
-
   useEffect(() => {
     const itemPrice = data.value * count;
     setTotalPrice(itemPrice);
@@ -63,7 +62,7 @@ export default function Detail({route}) {
       </ViewHeader>
       <ViewGlobal>
         <ViewImage>
-          <Image source={{uri: `http://192.168.1.191:1337${img}`}} />
+          <Image source={{uri: `http://192.168.0.95:1337${img}`}} />
         </ViewImage>
         <ViewTxt>
           <TitleText>{data.name}</TitleText>
@@ -88,8 +87,10 @@ export default function Detail({route}) {
         <Button
           name="Add to Cart"
           background="#7140FD"
-          onPress={() => sendCart(data)}
-          
+          onPress={() => {
+            sendCart(data);
+            navigation.navigate('Cart');
+          }}
         />
       </ViewGlobal>
     </ContainerGeral>

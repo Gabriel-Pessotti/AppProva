@@ -17,16 +17,25 @@ import TopHeader from '../../components/TopHeader';
 import {useNavigation} from '@react-navigation/native';
 import {CategoryList} from '../../components/CategoryList';
 import api from '../../services/api';
+import {useCategory} from '../../hook';
 
 export default function Search() {
   const navigation = useNavigation();
+  const {selectedCategory} = useCategory();
+
   const [search, setSearch] = useState();
   const [products, setProducts] = useState([]);
   const debounceDelay = 300;
 
   useEffect(() => {
+    getApi();
+  }, [selectedCategory]);
+
+  useEffect(() => {
     const debounceTimer = setTimeout(() => {
-      getApi();
+      if (search?.length > 1) {
+        getApi();
+      }
     }, debounceDelay);
 
     return () => {
@@ -35,16 +44,14 @@ export default function Search() {
   }, [search]);
 
   async function getApi() {
-    if (!search) {
-      // Evitar chamadas vazias
-      setProducts([]);
-      return;
-    }
-
     try {
-      const resp = await api.get(
-        `/produtos/?populate=*&filters[name][$containsi]=${search}`,
-      );
+      let url = '/produtos/?populate=*';
+      if (search) url = `${url}&filters[name][$containsi]=${search}`;
+      if (selectedCategory)
+        url = `${url}&filters[categoria][id][$eq]=${selectedCategory}`;
+      console.log(url);
+      const resp = await api.get(url);
+      console.log(search);
       setProducts(resp.data.data);
     } catch (error) {
       console.error('Erro ao buscar produtos:', error);
@@ -73,7 +80,7 @@ export default function Search() {
               <ViewImage>
                 <Image
                   source={{
-                    uri: `http://192.168.1.191:1337${item?.attributes.image?.data?.attributes.url}`,
+                    uri: `http://192.168.0.95:1337${item?.attributes.image?.data?.attributes.url}`,
                   }}
                 />
               </ViewImage>

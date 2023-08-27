@@ -76,7 +76,7 @@ export default function Cart() {
                 <ViewImage>
                   <Image
                     source={{
-                      uri: `http://192.168.1.191:1337${item?.image?.data?.attributes.url}`,
+                      uri: `http://192.168.0.95:1337${item?.image?.data?.attributes.url}`,
                     }}
                   />
                 </ViewImage>

@@ -50,7 +50,7 @@ export default function BastSaller() {
   return (
     <ContainerGeral>
       <ViewHeader>
-        <TopHeader onPress={() => navigation.goBack()} text="Settings Page" />
+        <TopHeader onPress={() => navigation.goBack()} text="All products" />
       </ViewHeader>
       <ViewGlobal>
       <FlatList
@@ -65,7 +65,7 @@ export default function BastSaller() {
             <ViewImage>
               <Image
                 source={{
-                  uri: `http://192.168.1.191:1337${item?.attributes.image.data?.attributes.url}`,
+                  uri: `http://192.168.0.95:1337${item?.attributes.image.data?.attributes.url}`,
                 }}
               />
             </ViewImage>

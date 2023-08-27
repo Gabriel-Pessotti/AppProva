@@ -20,6 +20,7 @@ import * as yup from 'yup';
 import Button from '../../components/Button';
 import {Input} from '../../components/Inputs';
 import api from '../../services/api';
+import { AuthContext } from '../../hook';
 
 const schema = yup.object().shape({
   identifier: yup.string().email().required('Informe Seu Email'),
@@ -30,6 +31,7 @@ const schema = yup.object().shape({
 });
 
 export default function Login({navigation}) {
+  const { login } = React.useContext(AuthContext)
   const {
     control,
     watch,
@@ -51,8 +53,11 @@ export default function Login({navigation}) {
       };
 
       const response = await api.post("/auth/local", newUser);
-      console.log(response);
-      navigation.navigate("Home");
+      login(response.data)
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Home' }]
+      })
     } catch (error) {
       console.log(error, "Erro novamente");
     }

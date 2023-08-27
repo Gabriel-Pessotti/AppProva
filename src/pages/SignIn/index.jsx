@@ -54,7 +54,6 @@ export default function SignIn({navigation}) {
         email: input.email,
         password: input.password,
       };
-      console.log(newUser);
 
       const response = await api.post('/auth/local/register', newUser);
       navigation.navigate('Login');

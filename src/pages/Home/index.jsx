@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ButtonSeach,
   ButtonViewAll,
@@ -20,16 +20,25 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {CardList} from '../../components/CardList';
 import {useNavigation} from '@react-navigation/native';
 import {CategoryList} from '../../components/CategoryList';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home() {
   const navigation = useNavigation();
+  const [name, setName] = useState()
+  useEffect(() => {
+    loadStorage();
+  }, [name]);
+  async function loadStorage() {
+    const item = await AsyncStorage.getItem('name')
+    setName(item)
+  }
 
   return (
     <ContainerGeral>
       <ViewHeader>
         <ViewHeaderText>
           <TextLocation>Location</TextLocation>
-          <Text>Jebres, Surakarta</Text>
+          <Text>{name}</Text>
         </ViewHeaderText>
         <ViewLocation>
           <ButtonSeach onPress={() => navigation.navigate('Search')}>
@@ -45,7 +54,7 @@ export default function Home() {
       <ViewGlobal>
         <ViewTexts>
           <TextStrong>Category</TextStrong>
-          <ButtonViewAll> 
+          <ButtonViewAll>
             <TextViewAll>View All</TextViewAll>
           </ButtonViewAll>
         </ViewTexts>

@@ -56,6 +56,8 @@ export const ViewFooterr = styled.View`
   gap: 5px;
   justify-content: center;
   height: 60px;
+  align-items: center;
+
 `;
 export const TextAccount = styled.Text`
   color: ${({theme})=>theme.Text.black};
@@ -75,5 +77,5 @@ export const ViewButton = styled.View`
   margin-left: auto;
   margin-right: auto;
   position: absolute;
-  bottom: 15px;
+  bottom: 3px;
 `;

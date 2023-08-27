@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const AuthContext = createContext();
 const CategoryContext = createContext();
 
+
 const AuthProvider = ({children}) => {
   const [cart, setCart] = useState([]);
   async function cartAdd(item) {
@@ -25,8 +26,19 @@ const AuthProvider = ({children}) => {
     await AsyncStorage.setItem('cart', JSON.stringify(newCart));
   }
 
+async function login(i){
+  await AsyncStorage.setItem('token', i.jwt)
+  await AsyncStorage.setItem('email', i.user.email)
+  await AsyncStorage.setItem('name', i.user.username)
+
+}
+
+async function logout() {
+  await AsyncStorage.clear()
+}
+
   return (
-    <AuthContext.Provider value={{cartAdd, cartSave}}>
+    <AuthContext.Provider value={{cartAdd, cartSave, login, logout}}>
       {children}
     </AuthContext.Provider>
   );

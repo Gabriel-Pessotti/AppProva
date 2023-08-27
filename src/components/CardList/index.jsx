@@ -53,7 +53,7 @@ export function CardList() {
                 <ViewImage>
                   <Image
                     source={{
-                      uri: `http://192.168.1.191:1337${item?.attributes.image?.data?.attributes.url}`,
+                      uri: `http://192.168.0.95:1337${item?.attributes.image?.data?.attributes.url}`,
                     }}
                     onError={() => console.log('A imagem falhou ao carregar')}
                   />

@@ -5,11 +5,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 import {FlatList} from 'react-native';
 import api from '../../services/api';
-import { useCategory } from '../../hook';
+import {useCategory} from '../../hook';
 
 export function CategoryList() {
   const [categories, setCategories] = useState([]);
-  const { selectedCategory, setSelectedCategory } = useCategory();
+  const {selectedCategory, setSelectedCategory} = useCategory();
+  const [isSwapClicked, setIsSwapClicked] = useState(false);
   const navigation = useNavigation();
   useEffect(() => {
     getCateg();
@@ -19,10 +20,16 @@ export function CategoryList() {
     const response = await api.get('/categorias/?populate=*');
     setCategories(response.data.data);
   }
-  // console.log(selected);
+
+  function handleSwapClick() {
+    setIsSwapClicked(true);
+    setSelectedCategory(null); // Limpar a seleção da categoria
+  }
+
+
   return (
     <ViewFlatCategory>
-      <ButtonSwap>
+      <ButtonSwap onPress={handleSwapClick}>
         <Ionicons name="swap-horizontal-outline" size={26} color="#000" />
       </ButtonSwap>
       <FlatList
@@ -33,11 +40,12 @@ export function CategoryList() {
           <>
             <Button
               onPress={() => {
-                setSelectedCategory(item?.attributes.name); // Atualize o valor selecionado no contexto
-                navigation.navigate('Search', { item: item?.attributes.name });
+                setSelectedCategory(item?.id);
+                navigation.navigate('Search', {
+                  category: item?.id,
+                }); // Passe a categoria selecionada como um parâmetro
               }}
-              isSelected={selectedCategory === item?.attributes.name}
-            >
+              isSelected={selectedCategory === item?.id}>
               <ButtonTitle>{item?.attributes.name}</ButtonTitle>
             </Button>
           </>
